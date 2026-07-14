@@ -33,4 +33,11 @@ app.use('/api/tareas', tareasRouter);
 const climaRouter = require('./routes/clima');
 app.use('/api/clima', climaRouter);
 
+const authRouter = require('./routes/auth');
+const verificarToken = require('./middleware/auth');
+
+app.use('/api/auth', authRouter);           // pública: registro y login
+app.use('/api/tareas', verificarToken, tareasRouter);  // protegida
+app.use('/api/clima', verificarToken, climaRouter);    // protegida
+
 module.exports = app;
